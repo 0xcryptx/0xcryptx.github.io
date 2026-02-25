@@ -366,7 +366,7 @@
             border-color: #007bff;
         }
 
-        /* Prevent logo hover when hovering over image button */
+        /* Separate effects: when image is pressed, only image gets effect - YA stays neutral */
         .logo-image-btn:hover ~ .logo-text,
         .logo-image-btn:active ~ .logo-text,
         .logo-image-btn.mobile-hover ~ .logo-text {
@@ -392,11 +392,6 @@
         .logo:hover,
         .logo:active {
             color: #007bff;
-        }
-
-        .logo.mobile-hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.35);
         }
 
         .logo:hover .logo-text,
@@ -1421,6 +1416,24 @@
                 align-items: center;
                 justify-content: center;
                 margin-left: auto;
+            }
+
+            .logo {
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+                min-height: 44px;
+                min-width: 44px;
+                cursor: pointer;
+                position: relative;
+                z-index: 10;
+            }
+
+            .logo-image-btn {
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: rgba(0, 123, 255, 0.25);
+                min-height: 44px;
+                min-width: 44px;
+                cursor: pointer;
             }
 
             .logo-image {
@@ -2666,6 +2679,15 @@
             if (!e.target.closest('a, button, input, textarea')) {
                 e.preventDefault();
             }
+            // Separate effects: logo (YA) and logo-image-btn get independent press states
+            // Don't add mobile-hover to logo when touching the image button - only the button should glow
+            if (this.classList.contains('logo') && e.target.closest('.logo-image-btn')) {
+                return;
+            }
+            // Don't add mobile-hover to logo-image-btn when touching the YA text
+            if (this.classList.contains('logo-image-btn') && !e.target.closest('.logo-image-btn')) {
+                return;
+            }
             this.classList.add('mobile-hover');
         }
 
@@ -2945,81 +2967,97 @@
         const profileModal = document.getElementById('profileModal');
         const closeModal = document.querySelector('.close-modal');
 
+        function openProfileModal(btn) {
+            profileModal.style.display = 'block';
+            if (btn) {
+                btn.style.background = '#007bff';
+                btn.style.color = 'white';
+                btn.style.transform = 'translateY(-2px)';
+                btn.style.boxShadow = '0 6px 20px rgba(0, 123, 255, 0.35)';
+                btn.style.setProperty('background', '#007bff', 'important');
+                btn.style.setProperty('color', 'white', 'important');
+            }
+        }
+
         profileImageBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            profileModal.style.display = 'block';
-            
-            // Turn button blue when modal opens
-            this.style.background = '#007bff';
-            this.style.color = 'white';
-            this.style.transform = 'translateY(-2px)';
-            this.style.boxShadow = '0 6px 20px rgba(0, 123, 255, 0.35)';
-            this.style.setProperty('background', '#007bff', 'important');
-            this.style.setProperty('color', 'white', 'important');
+            openProfileModal(this);
         });
 
-        // SIMPLE YA LOGO HANDLING - GUARANTEED TO WORK
+        // Mobile: same functionality as desktop - touchend opens modal (ensures tap works reliably)
+        profileImageBtn.addEventListener('touchend', function(e) {
+            if (e.target.closest('.logo-image-btn') === this) {
+                e.preventDefault();
+                e.stopPropagation();
+                openProfileModal(this);
+                // Close mobile menu if open (same as desktop - nav stays clean)
+                const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+                const mobileDropdown = document.querySelector('.mobile-dropdown');
+                if (mobileMenuToggle && mobileDropdown) {
+                    mobileMenuToggle.classList.remove('active');
+                    mobileDropdown.classList.remove('show');
+                }
+                // Clean up image button press state
+                setTimeout(() => this.classList.remove('mobile-hover'), 150);
+            }
+        }, { passive: false });
+
+        // LOGO HANDLING - Same behavior on desktop and mobile
         const logoBtn = document.querySelector('.logo');
         if (logoBtn) {
-            logoBtn.addEventListener('click', function(e) {
-                console.log('YA logo clicked!');
-                
-                // Turn blue immediately
-                this.style.color = '#007bff';
-                this.style.setProperty('color', '#007bff', 'important');
-                
-                const logoText = this.querySelector('.logo-text');
+            function flashLogoBlue(el) {
+                el.style.color = '#007bff';
+                el.style.setProperty('color', '#007bff', 'important');
+                const logoText = el.querySelector('.logo-text');
                 if (logoText) {
                     logoText.style.color = '#007bff';
                     logoText.style.setProperty('color', '#007bff', 'important');
                 }
-                
-                // Reset after 500ms
                 setTimeout(() => {
-                    this.style.color = '#333';
-                    this.style.setProperty('color', '#333', 'important');
-                    
+                    el.style.color = '#333';
+                    el.style.setProperty('color', '#333', 'important');
                     if (logoText) {
                         logoText.style.color = '#333';
                         logoText.style.setProperty('color', '#333', 'important');
                     }
-                    
-                    console.log('YA logo reset to gray');
                 }, 500);
+            }
+
+            function scrollToHome() {
+                const homeSection = document.getElementById('home');
+                if (homeSection) {
+                    homeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+
+            logoBtn.addEventListener('click', function(e) {
+                // If click was on profile image button, it's already handled (stopPropagation)
+                if (e.target.closest('.logo-image-btn')) return;
+                flashLogoBlue(this);
+                // Anchor default handles #home navigation; this ensures visual feedback
             });
-            
-            // Mobile touch handling
+
+            // Mobile: touchend for YA text - same as desktop (navigate to #home)
             if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-                logoBtn.addEventListener('touchstart', function(e) {
-                    console.log('YA logo touched!');
-                    
-                    // Turn blue immediately
-                    this.style.color = '#007bff';
-                    this.style.setProperty('color', '#007bff', 'important');
-                    
-                    const logoText = this.querySelector('.logo-text');
-                    if (logoText) {
-                        logoText.style.color = '#007bff';
-                        logoText.style.setProperty('color', '#007bff', 'important');
-                    }
-                }, { passive: true });
-                
                 logoBtn.addEventListener('touchend', function(e) {
-                    // Reset after touch ends
-                    setTimeout(() => {
-                        this.style.color = '#333';
-                        this.style.setProperty('color', '#333', 'important');
-                        
-                        const logoText = this.querySelector('.logo-text');
-                        if (logoText) {
-                            logoText.style.color = '#333';
-                            logoText.style.setProperty('color', '#333', 'important');
-                        }
-                        
-                        console.log('YA logo reset to gray after touch');
-                    }, 300);
-                }, { passive: true });
+                    if (e.target.closest('.logo-image-btn')) {
+                        // Button tap handled by profileImageBtn touchend
+                        return;
+                    }
+                    // YA text tap: same as desktop - navigate to #home
+                    e.preventDefault();
+                    flashLogoBlue(this);
+                    scrollToHome();
+                    this.classList.remove('mobile-hover');
+                    // Close mobile menu if open (same as clicking outside)
+                    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+                    const mobileDropdown = document.querySelector('.mobile-dropdown');
+                    if (mobileMenuToggle && mobileDropdown) {
+                        mobileMenuToggle.classList.remove('active');
+                        mobileDropdown.classList.remove('show');
+                    }
+                }, { passive: false });
             }
         }
 
