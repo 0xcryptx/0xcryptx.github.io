@@ -778,6 +778,61 @@
             color: #333;
         }
 
+        /* Project website status (Projects section only) */
+        #projects .project-status-legend {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem 0.75rem;
+            margin: 0.5rem 0 0;
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        #projects .project-status-legend .legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        #projects .project-status-legend .legend-sep {
+            color: #ccc;
+            user-select: none;
+        }
+
+        #projects .card-title-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        #projects .card-title-row .card-title {
+            margin-bottom: 0;
+        }
+
+        #projects .project-status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            border: 2px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+        }
+
+        #projects .project-status-dot--online {
+            background: #22c55e;
+        }
+
+        #projects .project-status-dot--pending {
+            background: #eab308;
+        }
+
+        #projects .project-status-dot--offline {
+            background: #ef4444;
+        }
+
         .card-subtitle {
             color: #007bff;
             font-weight: 500;
@@ -2021,7 +2076,9 @@
             }
 
             /* Ensure anchor links work properly on mobile */
-            .project-btn.amalak-btn {
+            .project-btn.amalak-btn,
+            .project-btn.buildyourweb-btn,
+            .project-btn.janatravel-btn {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -2030,7 +2087,9 @@
                 -webkit-tap-highlight-color: rgba(0, 123, 255, 0.2);
             }
 
-            .project-btn.amalak-btn:active {
+            .project-btn.amalak-btn:active,
+            .project-btn.buildyourweb-btn:active,
+            .project-btn.janatravel-btn:active {
                 background: #007bff;
                 color: white;
                 transform: translateY(-1px);
@@ -2330,17 +2389,27 @@
                     <span class="section-emoji">🚀</span>
                     <h2 class="section-title">Projects</h2>
                     <p class="section-subtitle">What I've been working on</p>
+                    <p class="project-status-legend" aria-label="Website status key">
+                        <span class="legend-item"><span class="project-status-dot project-status-dot--online" aria-hidden="true"></span> Active</span>
+                        <span class="legend-sep" aria-hidden="true">·</span>
+                        <span class="legend-item"><span class="project-status-dot project-status-dot--pending" aria-hidden="true"></span> In progress</span>
+                        <span class="legend-sep" aria-hidden="true">·</span>
+                        <span class="legend-item"><span class="project-status-dot project-status-dot--offline" aria-hidden="true"></span> Offline</span>
+                    </p>
                 </div>
                 <div class="experience-grid">
                     <div class="experience-card">
-                        <p class="card-date">Jun 2025 - Present</p>
-                        <h3 class="card-title">SnatchIt</h3>
+                        <p class="card-date">Jun 2025 – Jan 2026</p>
+                        <div class="card-title-row">
+                            <span class="project-status-dot project-status-dot--offline" role="img" aria-label="Status: offline"></span>
+                            <h3 class="card-title">SnatchIt</h3>
+                        </div>
                         <p class="card-subtitle">Affiliate Marketing Platform</p>
                         <ul class="card-list">
                             <li>Developed SnatchIt, a fully functional affiliate marketing website</li>
                             <li>Built the platform's structure, core features, and design</li>
                             <li>Focused on curating and promoting affiliate links</li>
-                            <li>Currently working on expanding platform capabilities</li>
+                            <li>Worked on expanding platform capabilities during active development</li>
                         </ul>
                         <div class="project-button-container">
                             <a href="#" class="project-btn snatchit-btn" id="snatchitBtn">
@@ -2351,7 +2420,10 @@
                     </div>
                     <div class="experience-card">
                         <p class="card-date">Dec 2024 - Present</p>
-                        <h3 class="card-title">Amalak.ae</h3>
+                        <div class="card-title-row">
+                            <span class="project-status-dot project-status-dot--online" role="img" aria-label="Status: active"></span>
+                            <h3 class="card-title">Amalak.ae</h3>
+                        </div>
                         <p class="card-subtitle">Official Company Website</p>
                         <ul class="card-list">
                             <li>Built the official website for Amal Al Khaleej — Dubai-based interior design company</li>
@@ -2361,6 +2433,46 @@
                         </ul>
                         <div class="project-button-container">
                             <a href="https://amalak.ae" target="_blank" class="project-btn amalak-btn" rel="noopener noreferrer">
+                                <span class="btn-icon">🌐</span>
+                                <span class="btn-text">Website</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="experience-card">
+                        <p class="card-date">Apr 2026 – Present</p>
+                        <div class="card-title-row">
+                            <span class="project-status-dot project-status-dot--online" role="img" aria-label="Status: active"></span>
+                            <h3 class="card-title">Build Your Web</h3>
+                        </div>
+                        <p class="card-subtitle">Website Design Studio</p>
+                        <ul class="card-list">
+                            <li>Built a front-end website design brand focused on modern, polished websites for businesses, personal brands, and portfolios</li>
+                            <li>Designed and developed the studio website with a strong focus on presentation, responsiveness, and clean user experience</li>
+                            <li>Structured service offerings around landing pages, portfolio websites, multi-page websites, and custom link hub pages</li>
+                            <li>Focused on creating a professional online presence, clear service communication, and a polished client journey</li>
+                        </ul>
+                        <div class="project-button-container">
+                            <a href="https://buildyourweb.ae" target="_blank" class="project-btn buildyourweb-btn" rel="noopener noreferrer">
+                                <span class="btn-icon">🌐</span>
+                                <span class="btn-text">Website</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="experience-card">
+                        <p class="card-date">Mar 2026 – Present</p>
+                        <div class="card-title-row">
+                            <span class="project-status-dot project-status-dot--pending" role="img" aria-label="Status: in progress"></span>
+                            <h3 class="card-title">JANA Travel</h3>
+                        </div>
+                        <p class="card-subtitle">Luxury Travel Website</p>
+                        <ul class="card-list">
+                            <li>Built a modern travel website for JANA Travel, focused on luxury holidays across the Maldives and Indian Ocean</li>
+                            <li>Designed and structured key sections including destinations, featured packages, services, gallery, and contact</li>
+                            <li>Focused on responsive layout, polished presentation, and a premium visual style suited to a luxury travel brand</li>
+                            <li>Helped present travel packages, curated experiences, and tailored itineraries in a more engaging and professional way</li>
+                        </ul>
+                        <div class="project-button-container">
+                            <a href="https://yassinamin.com/janatravel" target="_blank" class="project-btn janatravel-btn" rel="noopener noreferrer">
                                 <span class="btn-icon">🌐</span>
                                 <span class="btn-text">Website</span>
                             </a>
@@ -2576,12 +2688,12 @@
         </div>
     </div>
 
-    <!-- SnatchIt Development Popup -->
+    <!-- SnatchIt offline notice popup -->
     <div id="snatchitPopup" class="success-popup">
         <div class="popup-content">
-            <div class="popup-icon">🚧</div>
-            <h4>Under Development</h4>
-            <p>SnatchIt website is currently being developed. Coming soon!</p>
+            <div class="popup-icon">⚠️</div>
+            <h4>Website offline</h4>
+            <p>The SnatchIt site is no longer available online.</p>
         </div>
     </div>
 
@@ -2918,10 +3030,10 @@
                 }
             }
 
-            // Amalak button - independent functionality (anchor link)
-            const amalakBtn = document.querySelector('.project-btn.amalak-btn');
-            if (amalakBtn) {
-                const handleAmalakAction = function(e) {
+            // External project website buttons (anchor links) — Amalak, Build Your Web, JANA Travel
+            const externalProjectBtns = document.querySelectorAll('.project-btn.amalak-btn, .project-btn.buildyourweb-btn, .project-btn.janatravel-btn');
+            externalProjectBtns.forEach((externalProjectBtn) => {
+                const handleExternalProjectAction = function(e) {
                     // Don't prevent default - let the link work
                     // Just add visual feedback
                     this.style.background = '#007bff';
@@ -2942,13 +3054,13 @@
                 };
                 
                 // Remove any existing listeners
-                amalakBtn.removeEventListener('click', handleAmalakAction);
-                amalakBtn.removeEventListener('touchstart', handleAmalakAction);
+                externalProjectBtn.removeEventListener('click', handleExternalProjectAction);
+                externalProjectBtn.removeEventListener('touchstart', handleExternalProjectAction);
                 
                 // Add new listeners
-                amalakBtn.addEventListener('click', handleAmalakAction, { passive: true });
-                amalakBtn.addEventListener('touchstart', handleAmalakAction, { passive: true });
-            }
+                externalProjectBtn.addEventListener('click', handleExternalProjectAction, { passive: true });
+                externalProjectBtn.addEventListener('touchstart', handleExternalProjectAction, { passive: true });
+            });
 
             // Certificate buttons - auto deselect functionality
             const certificateBtns = document.querySelectorAll('.certificate-btn');
