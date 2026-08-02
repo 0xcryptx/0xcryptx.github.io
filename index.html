@@ -1431,27 +1431,46 @@
 
         @media (max-width: 768px) {
             .languages-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
                 max-width: 400px;
             }
 
             .language-card {
-                padding: 1.5rem;
+                padding: 1rem;
+            }
+
+            .language-flag-container {
+                margin-bottom: 0.75rem;
             }
 
             .language-flag {
-                width: 80px;
-                height: 48px;
+                width: 56px;
+                height: 34px;
             }
 
             .flag-overlay {
-                width: 60px;
-                height: 60px;
+                width: 44px;
+                height: 44px;
             }
 
             .language-name {
-                font-size: 1.2rem;
+                font-size: 0.95rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .language-level {
+                margin-bottom: 0.5rem;
+            }
+
+            .level-badge {
+                padding: 0.3rem 0.7rem;
+                font-size: 0.65rem;
+            }
+
+            .language-details {
+                font-size: 0.68rem;
+                line-height: 1.35;
             }
         }
 
@@ -1938,14 +1957,46 @@
                 gap: 1rem;
             }
 
+            /* Projects only (not Experience, which shares .experience-grid) */
+            #projects .experience-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+
             .certificates-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
             }
 
             .skills-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+
+            .skill-category {
+                padding: 1rem;
+            }
+
+            .skill-category h3 {
+                font-size: 0.8rem;
+                margin-bottom: 0.6rem;
+            }
+
+            .skill-list li {
+                font-size: 0.72rem;
+                gap: 0.4rem;
+                margin-bottom: 0.3rem;
+                align-items: flex-start;
+            }
+
+            .skill-emoji img {
+                width: 18px;
+                height: 18px;
+            }
+
+            .skill-emoji img[alt="JavaScript"] {
+                width: 15px;
+                height: 15px;
             }
 
             .education-content {
@@ -2021,7 +2072,147 @@
                 margin: 0 0 0.8rem 0 !important;
             }
 
+            /* Compact 2-column cards: Projects only. Flex column + the
+               button's margin-top:auto below pins the button to the same
+               bottom edge on every card in a row (grid stretches row-mates
+               to equal height), so buttons line up regardless of how much
+               text a given card has. */
+            #projects .experience-card {
+                padding: 1rem;
+                display: flex;
+                flex-direction: column;
+            }
 
+            /* Date flows above the title instead of overlapping it, since
+               narrow 2-column cards don't have room for an absolutely-
+               positioned badge next to the title text */
+            #projects .card-date {
+                position: static;
+                display: inline-block;
+                align-self: flex-start;
+                font-size: 0.6rem;
+                padding: 0.15rem 0.4rem;
+                margin-bottom: 0.4rem;
+            }
+
+            #projects .card-title {
+                font-size: 0.85rem;
+            }
+
+            #projects .card-subtitle {
+                font-size: 0.68rem;
+            }
+
+            #projects .card-list li {
+                font-size: 0.68rem;
+                line-height: 1.35;
+                padding-left: 0.75rem;
+                margin-bottom: 0.25rem;
+            }
+
+            /* margin-top: auto pins this to the card's bottom edge (the
+               flex column above) instead of sitting right after the text,
+               so it can never collide with content and lines up with the
+               button in the neighboring card */
+            #projects .project-button-container {
+                position: static;
+                margin-top: auto;
+                padding-top: 0.75rem;
+            }
+
+            #projects .project-btn {
+                min-height: 40px;
+                min-width: 0;
+                width: 100%;
+                padding: 0.5rem 0.6rem;
+                gap: 0.4rem;
+            }
+
+            #projects .project-btn .btn-icon {
+                font-size: 0.8rem;
+            }
+
+            #projects .project-btn .btn-text {
+                font-size: 0.68rem;
+            }
+
+            /* Compact 2-column cards: Certificates. Flex column + the
+               button's margin-top:auto below pins the button to the same
+               bottom edge on every card in a row, so buttons line up
+               regardless of how much text a given card has. */
+            .certificate-card {
+                padding: 1rem;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .certificate-icon img {
+                width: 56px !important;
+                height: 56px !important;
+            }
+
+            .certificate-icon {
+                margin-bottom: 0.6rem;
+            }
+
+            .certificate-title {
+                font-size: 0.85rem;
+            }
+
+            .certificate-issuer {
+                font-size: 0.58rem;
+            }
+
+            .certificate-date {
+                font-size: 0.6rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .certificate-description {
+                font-size: 0.68rem;
+                line-height: 1.35;
+                margin-bottom: 0.6rem;
+                display: -webkit-box;
+                -webkit-line-clamp: 4;
+                line-clamp: 4;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            .certificate-tags {
+                gap: 0.3rem;
+            }
+
+            .certificate-tag {
+                font-size: 0.6rem;
+                padding: 0.2rem 0.4rem;
+            }
+
+            /* margin-top: auto pins this to the card's bottom edge (the
+               flex column above) instead of sitting right after the tags,
+               so it can never collide with content and lines up with the
+               button in the neighboring card */
+            .certificate-button-container {
+                position: static;
+                margin-top: auto;
+                padding-top: 0.75rem;
+            }
+
+            #certificates .certificate-btn {
+                min-height: 40px;
+                min-width: 0;
+                width: 100%;
+                padding: 0.5rem 0.6rem;
+                gap: 0.4rem;
+            }
+
+            #certificates .certificate-btn .btn-icon {
+                font-size: 0.8rem;
+            }
+
+            #certificates .certificate-btn .btn-text {
+                font-size: 0.68rem;
+            }
 
             /* Independent button controls on mobile */
             .project-btn, .certificate-btn {
@@ -2568,6 +2759,16 @@
                             <li><span class="skill-emoji"><img src="assets/linux.png" alt="Linux"></span> Linux</li>
                             <li><span class="skill-emoji"><img src="assets/kali_linux.png" alt="Kali Linux"></span> Kali Linux</li>
                             <li><span class="skill-emoji"><img src="assets/ubuntu.png" alt="Ubuntu"></span> Ubuntu</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>🖥️ Virtualization & Systems</h3>
+                        <ul class="skill-list">
+                            <li><span class="skill-emoji"><img src="assets/proxmox.svg" alt="Proxmox"></span> Proxmox VE</li>
+                            <li><span class="skill-emoji"><img src="assets/vmware.svg" alt="VMware"></span> VMware</li>
+                            <li><span class="skill-emoji"><img src="assets/virtualbox.svg" alt="VirtualBox"></span> VirtualBox</li>
+                            <li><span class="skill-emoji"><img src="assets/server.svg" alt="Server Administration"></span> Server Administration</li>
+                            <li><span class="skill-emoji"><img src="assets/iso.svg" alt="ISO Imaging"></span> ISO Image Deployment</li>
                         </ul>
                     </div>
                     <div class="skill-category">
