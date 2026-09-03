@@ -2274,6 +2274,7 @@
             .project-btn.amalak-btn,
             .project-btn.buildyourweb-btn,
             .project-btn.janatravel-btn,
+            .project-btn.mermaid-btn,
             .project-btn.unissen-btn,
             .project-btn.rejuvenate-btn {
                 display: flex;
@@ -2287,6 +2288,7 @@
             .project-btn.amalak-btn:active,
             .project-btn.buildyourweb-btn:active,
             .project-btn.janatravel-btn:active,
+            .project-btn.mermaid-btn:active,
             .project-btn.unissen-btn:active,
             .project-btn.rejuvenate-btn:active {
                 background: #007bff;
@@ -2637,6 +2639,26 @@
                     </p>
                 </div>
                 <div class="experience-grid">
+                    <div class="experience-card">
+                        <p class="card-date">Aug 2026 – Present</p>
+                        <div class="card-title-row">
+                            <span class="project-status-dot project-status-dot--pending" role="img" aria-label="Status: in progress"></span>
+                            <h3 class="card-title">Mermaid</h3>
+                        </div>
+                        <p class="card-subtitle">Tadbeer-Licensed Domestic Worker Platform</p>
+                        <ul class="card-list">
+                            <li>Built a full web platform for Tadbeer Mermaid, a MOHRE-approved domestic worker agency based in Dubai</li>
+                            <li>Designed key sections including packages, maid profiles, services, testimonials, and a multilingual interface (English & Arabic)</li>
+                            <li>Integrated WhatsApp-based hiring flows for direct client-to-agency communication and package inquiries</li>
+                            <li>Focused on a clean, trust-building layout suited to the domestic staffing market in the UAE</li>
+                        </ul>
+                        <div class="project-button-container">
+                            <a href="https://mermaid.buildyourweb.ae" target="_blank" class="project-btn mermaid-btn" rel="noopener noreferrer">
+                                <span class="btn-icon">🌐</span>
+                                <span class="btn-text">Website</span>
+                            </a>
+                        </div>
+                    </div>
                     <div class="experience-card">
                         <p class="card-date">Apr 2026 – Present</p>
                         <div class="card-title-row">
@@ -3320,7 +3342,7 @@
             }
 
             // External project website buttons (anchor links) — Amalak, Build Your Web, JANA Travel, Unissen, Rejuvenate
-            const externalProjectBtns = document.querySelectorAll('.project-btn.amalak-btn, .project-btn.buildyourweb-btn, .project-btn.janatravel-btn, .project-btn.unissen-btn, .project-btn.rejuvenate-btn');
+            const externalProjectBtns = document.querySelectorAll('.project-btn.amalak-btn, .project-btn.buildyourweb-btn, .project-btn.janatravel-btn, .project-btn.mermaid-btn, .project-btn.unissen-btn, .project-btn.rejuvenate-btn');
             externalProjectBtns.forEach((externalProjectBtn) => {
                 const handleExternalProjectAction = function(e) {
                     // Don't prevent default - let the link work
