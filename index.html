@@ -1928,6 +1928,12 @@
             transform: translateY(0);
         }
 
+        /* Accordion chevron is a mobile-only affordance; hidden on desktop
+           where all project details are already shown expanded */
+        .project-accordion-chevron {
+            display: none;
+        }
+
         /* Mobile Design - Compact and Centered */
         @media (max-width: 768px) {
             .nav-links {
@@ -2179,6 +2185,7 @@
             }
 
             .project-accordion-chevron {
+                display: block;
                 position: absolute;
                 top: 50%;
                 right: 0.9rem;
