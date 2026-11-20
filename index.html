@@ -800,7 +800,26 @@
             gap: 0.35rem;
         }
 
+        #projects .project-status-legend .legend-item {
+            flex-direction: column;
+            gap: 0.1rem;
+        }
+
+        #projects .project-status-legend .legend-count {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1;
+            color: #007bff;
+        }
+
+        #projects .project-status-legend .legend-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
         #projects .project-status-legend .legend-sep {
+            align-self: flex-end;
             color: #ccc;
             user-select: none;
         }
@@ -2370,7 +2389,8 @@
             .project-btn.janatravel-btn,
             .project-btn.mermaid-btn,
             .project-btn.unissen-btn,
-            .project-btn.rejuvenate-btn {
+            .project-btn.rejuvenate-btn,
+            .project-btn.masterclass-btn {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -2384,7 +2404,8 @@
             .project-btn.janatravel-btn:active,
             .project-btn.mermaid-btn:active,
             .project-btn.unissen-btn:active,
-            .project-btn.rejuvenate-btn:active {
+            .project-btn.rejuvenate-btn:active,
+            .project-btn.masterclass-btn:active {
                 background: #007bff;
                 color: white;
                 transform: translateY(-1px);
@@ -2725,14 +2746,39 @@
                     <h2 class="section-title">Projects</h2>
                     <p class="section-subtitle">What I've been working on</p>
                     <p class="project-status-legend" aria-label="Website status key">
-                        <span class="legend-item"><span class="project-status-dot project-status-dot--online" aria-hidden="true"></span> Active</span>
+                        <span class="legend-item"><span class="legend-count" data-status-count="online">5</span><span class="legend-label"><span class="project-status-dot project-status-dot--online" aria-hidden="true"></span> Active</span></span>
                         <span class="legend-sep" aria-hidden="true">·</span>
-                        <span class="legend-item"><span class="project-status-dot project-status-dot--pending" aria-hidden="true"></span> In progress</span>
+                        <span class="legend-item"><span class="legend-count" data-status-count="pending">2</span><span class="legend-label"><span class="project-status-dot project-status-dot--pending" aria-hidden="true"></span> In progress</span></span>
                         <span class="legend-sep" aria-hidden="true">·</span>
-                        <span class="legend-item"><span class="project-status-dot project-status-dot--offline" aria-hidden="true"></span> Offline</span>
+                        <span class="legend-item"><span class="legend-count" data-status-count="offline">1</span><span class="legend-label"><span class="project-status-dot project-status-dot--offline" aria-hidden="true"></span> Offline</span></span>
                     </p>
                 </div>
                 <div class="experience-grid">
+                    <div class="experience-card project-accordion-card">
+                        <div class="project-accordion-header">
+                            <p class="card-date">Oct 2026 – Nov 2026</p>
+                            <div class="card-title-row">
+                                <span class="project-status-dot project-status-dot--online" role="img" aria-label="Status: active"></span>
+                                <h3 class="card-title">The Ultimate Masterclass</h3>
+                            </div>
+                            <p class="card-subtitle">Luxury Business Masterclass &amp; Retreat Website</p>
+                            <span class="project-accordion-chevron" aria-hidden="true">&#8964;</span>
+                        </div>
+                        <div class="project-card-body">
+                            <ul class="card-list">
+                                <li>Designed and developed a website for The Ultimate Masterclass, a five-day luxury business masterclass and retreat in Dubai for entrepreneurs and business owners</li>
+                                <li>Presented the full event programme, including the business growth masterclass, welcome brunch, Arabian night, wellness sessions, and yacht party</li>
+                                <li>Built ticketing sections with full-payment and monthly instalment options, a partner ticket, terms acceptance, and a WhatsApp booking fallback</li>
+                                <li>Focused on a premium, aspirational look suited to beauty and aesthetics professionals, with a gallery of past events</li>
+                            </ul>
+                            <div class="project-button-container">
+                                <a href="https://theultimatemasterclass.co.uk/" target="_blank" class="project-btn masterclass-btn" rel="noopener noreferrer">
+                                    <span class="btn-icon">🌐</span>
+                                    <span class="btn-text">Website</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="experience-card project-accordion-card">
                         <div class="project-accordion-header">
                             <p class="card-date">Aug 2026 – Present</p>
@@ -2751,7 +2797,7 @@
                                 <li>Focused on a clean, trust-building layout suited to the domestic staffing market in the UAE</li>
                             </ul>
                             <div class="project-button-container">
-                                <a href="https://mermaid.buildyourweb.ae" target="_blank" class="project-btn mermaid-btn" rel="noopener noreferrer">
+                                <a href="https://mermaid.buildyourweb.ae" target="_blank" class="project-btn mermaid-btn" rel="noopener noreferrer" data-under-development>
                                     <span class="btn-icon">🌐</span>
                                     <span class="btn-text">Website</span>
                                 </a>
@@ -3112,7 +3158,7 @@
                 <span class="btn-icon">💼</span>
                 <span class="btn-text">LinkedIn</span>
             </a>
-            <a href="CV/yassein_abdelkawy_resume.docx" download class="social-btn cv-btn">
+            <a href="CV/yassein_abdelkawy_resume.pdf" download class="social-btn cv-btn">
                 <span class="btn-icon">📄</span>
                 <span class="btn-text">Download CV</span>
             </a>
@@ -3134,6 +3180,15 @@
             <div class="popup-icon">⚠️</div>
             <h4>Website offline</h4>
             <p>The SnatchIt site is no longer available online.</p>
+        </div>
+    </div>
+
+    <!-- Under development notice popup (same style as SnatchIt) -->
+    <div id="devPopup" class="success-popup">
+        <div class="popup-content">
+            <div class="popup-icon">🚧</div>
+            <h4>Under development</h4>
+            <p>This website is still under development. Check back soon!</p>
         </div>
     </div>
 
@@ -3470,8 +3525,8 @@
                 }
             }
 
-            // External project website buttons (anchor links) — Amalak, Build Your Web, JANA Travel, Unissen, Rejuvenate
-            const externalProjectBtns = document.querySelectorAll('.project-btn.amalak-btn, .project-btn.buildyourweb-btn, .project-btn.janatravel-btn, .project-btn.mermaid-btn, .project-btn.unissen-btn, .project-btn.rejuvenate-btn');
+            // External project website buttons (anchor links) — Amalak, Build Your Web, JANA Travel, Unissen, Rejuvenate, The Ultimate Masterclass
+            const externalProjectBtns = document.querySelectorAll('.project-btn.amalak-btn, .project-btn.buildyourweb-btn, .project-btn.janatravel-btn, .project-btn.unissen-btn, .project-btn.rejuvenate-btn, .project-btn.masterclass-btn');
             externalProjectBtns.forEach((externalProjectBtn) => {
                 const handleExternalProjectAction = function(e) {
                     // Don't prevent default - let the link work
@@ -3500,6 +3555,35 @@
                 // Add new listeners
                 externalProjectBtn.addEventListener('click', handleExternalProjectAction, { passive: true });
                 externalProjectBtn.addEventListener('touchstart', handleExternalProjectAction, { passive: true });
+            });
+
+            // Project status counts in the legend (counted from the cards' status dots)
+            document.querySelectorAll('#projects .legend-count[data-status-count]').forEach((el) => {
+                const status = el.getAttribute('data-status-count');
+                el.textContent = document.querySelectorAll('#projects .card-title-row .project-status-dot--' + status).length;
+            });
+
+            // Sites still under development: show the SnatchIt-style popup instead of opening the link
+            const devPopup = document.getElementById('devPopup');
+            let devPopupTimer;
+            document.querySelectorAll('.project-btn[data-under-development]').forEach((btn) => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.style.background = '#007bff';
+                    this.style.color = 'white';
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 6px 20px rgba(0, 123, 255, 0.35)';
+                    devPopup.classList.add('show');
+                    clearTimeout(devPopupTimer);
+                    devPopupTimer = setTimeout(() => {
+                        devPopup.classList.remove('show');
+                        this.style.background = '';
+                        this.style.color = '';
+                        this.style.transform = '';
+                        this.style.boxShadow = '';
+                    }, 2000);
+                });
             });
 
             // Certificate buttons - auto deselect functionality
