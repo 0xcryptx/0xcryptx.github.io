@@ -775,6 +775,312 @@
             box-shadow: 0 6px 20px rgba(0, 123, 255, 0.35);
         }
 
+        /* Project screenshot galleries — ported from JANA Travel's room image viewer */
+        /* Grid/flex children must be allowed to shrink or Swiper measures an unbounded width */
+        #projects .experience-grid > .experience-card,
+        .project-card-body {
+            min-width: 0;
+        }
+
+        .project-gallery {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            margin: 0.6rem 0 0.9rem;
+            border: 1px solid rgba(0, 123, 255, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 6px 12px rgba(0, 123, 255, 0.1);
+            cursor: zoom-in;
+        }
+
+        .project-gallery-swiper {
+            width: 100%;
+            overflow: hidden;
+            touch-action: pan-y pinch-zoom;
+        }
+
+        .project-gallery-swiper .swiper-slide {
+            flex-shrink: 0;
+            width: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transform: translateZ(0);
+        }
+
+        .project-thumb {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            object-position: top center;
+            cursor: zoom-in;
+            user-select: none;
+            -webkit-user-drag: none;
+            background: linear-gradient(100deg, rgba(0, 123, 255, 0.05) 30%, rgba(0, 123, 255, 0.12) 50%, rgba(0, 123, 255, 0.05) 70%);
+            background-size: 200% 100%;
+            animation: project-thumb-shimmer 1.2s ease-in-out infinite, project-thumb-fade-in 0.45s ease-out both;
+        }
+
+        @keyframes project-thumb-fade-in { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes project-thumb-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+        @media (prefers-reduced-motion: reduce) {
+            .project-thumb { animation: none; }
+        }
+
+        /* Shared glass controls (JANA media-viewer chrome) */
+        .project-gallery-nav,
+        .project-lightbox-btn,
+        .project-gallery-counter,
+        .project-gallery-expand,
+        .project-lightbox-counter {
+            border: 1px solid rgba(255, 255, 255, 0.42);
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(14px) saturate(1.2);
+            -webkit-backdrop-filter: blur(14px) saturate(1.2);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+            color: #fff;
+            transition: background 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease, color 0.22s ease, opacity 0.2s ease;
+        }
+
+        .project-gallery-counter,
+        .project-gallery-expand,
+        .project-lightbox-counter {
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+        }
+
+        .project-gallery-nav,
+        .project-lightbox-btn {
+            cursor: pointer;
+        }
+
+        .project-gallery-nav:hover,
+        .project-lightbox-btn:hover {
+            background: #007bff;
+            border-color: rgba(255, 255, 255, 0.55);
+            box-shadow: 0 6px 18px rgba(0, 123, 255, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+            color: #fff;
+        }
+
+        .project-gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            padding: 0;
+            border-radius: 999px;
+            font-size: 1.02rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            opacity: 0.55;
+        }
+
+        .project-gallery.is-hover .project-gallery-nav,
+        .project-gallery:hover .project-gallery-nav,
+        .project-gallery:has(:focus-visible) .project-gallery-nav {
+            opacity: 1;
+        }
+
+        .project-gallery-nav:hover {
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .project-gallery-nav--prev { left: 0.55rem; }
+        .project-gallery-nav--next { right: 0.55rem; }
+
+        .project-gallery-counter {
+            position: absolute;
+            left: 50%;
+            bottom: 0.5rem;
+            transform: translateX(-50%);
+            font-size: 0.76rem;
+            padding: 0.2rem 0.48rem;
+            border-radius: 999px;
+            line-height: 1.2;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .project-gallery-expand {
+            position: absolute;
+            right: 0.45rem;
+            bottom: 0.45rem;
+            font-size: 0.62rem;
+            padding: 0.18rem 0.42rem;
+            border-radius: 999px;
+            line-height: 1.2;
+            letter-spacing: 0.01em;
+            z-index: 3;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .project-gallery.is-hover .project-gallery-counter,
+        .project-gallery.is-hover .project-gallery-expand,
+        .project-gallery:hover .project-gallery-counter,
+        .project-gallery:hover .project-gallery-expand,
+        .project-gallery:has(:focus-visible) .project-gallery-counter,
+        .project-gallery:has(:focus-visible) .project-gallery-expand {
+            opacity: 1;
+        }
+
+        /* Fullscreen lightbox */
+        .project-lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .project-lightbox.active {
+            display: flex;
+        }
+
+        .project-lightbox-swiper {
+            position: relative;
+            flex: 0 0 auto;
+            width: min(92vw, 1100px);
+            height: min(78dvh, calc(100dvh - 9rem));
+            margin: 0 auto;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        .project-lightbox-swiper .swiper-wrapper {
+            height: 100%;
+            align-items: center;
+        }
+
+        .project-lightbox-swiper .swiper-slide {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-lightbox-swiper img {
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: min(78dvh, calc(100dvh - 9rem));
+            margin: auto;
+            object-fit: contain;
+            border-radius: 10px;
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .project-lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: none;
+            color: #fff;
+            border: none;
+            font-size: 3rem;
+            line-height: 1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .project-lightbox-close:hover {
+            color: #7cc4ff;
+            transform: rotate(90deg);
+        }
+
+        .project-lightbox-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            line-height: 1;
+            z-index: 10;
+        }
+
+        .project-lightbox-btn:hover {
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .project-lightbox-prev { left: 30px; }
+        .project-lightbox-next { right: 30px; }
+
+        .project-lightbox-counter {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            padding: 8px 20px;
+            border-radius: 999px;
+            z-index: 12;
+            pointer-events: none;
+        }
+
+        /* Phone: swipe only — no arrow buttons; counter always visible */
+        @media (max-width: 780px) {
+            .project-gallery {
+                border-radius: 8px;
+            }
+
+            .project-gallery-nav,
+            .project-lightbox-btn {
+                display: none !important;
+            }
+
+            .project-gallery .project-gallery-counter {
+                opacity: 1 !important;
+                visibility: visible !important;
+                font-size: 0.62rem;
+                padding: 0.15rem 0.36rem;
+                bottom: 0.35rem;
+            }
+
+            .project-gallery-expand {
+                display: none;
+            }
+
+            .project-lightbox.active {
+                padding: 3.25rem 1rem 4.5rem;
+            }
+
+            .project-lightbox-swiper {
+                width: calc(100vw - 2rem);
+                height: min(72dvh, calc(100dvh - 8rem));
+            }
+
+            .project-lightbox-swiper img {
+                max-width: calc(100vw - 2rem);
+                max-height: min(72dvh, calc(100dvh - 8rem));
+            }
+
+            .project-lightbox-close {
+                top: 10px;
+                right: 16px;
+            }
+        }
+
         .card-title {
             font-size: 1.1rem;
             font-weight: 600;
@@ -2110,7 +2416,7 @@
             }
 
             /* Mobile logo positioning */
-            .experience-card img {
+            .experience-card img:not(.project-thumb) {
                 width: 80px !important;
                 height: 80px !important;
                 margin: 0 0 0.8rem 0 !important;
@@ -2243,7 +2549,7 @@
             }
 
             .project-accordion-card.is-open .project-card-body {
-                max-height: 600px;
+                max-height: 1000px;
                 padding: 0 1rem 0.85rem;
             }
 
@@ -2518,6 +2824,8 @@
         ]
       }
     </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.js"></script>
 </head>
     <body>
         <!-- Decorative Background Elements -->
@@ -2780,6 +3088,20 @@
                             <span class="project-accordion-chevron" aria-hidden="true">&#8964;</span>
                         </div>
                         <div class="project-card-body">
+                            <div class="project-gallery" data-gallery-title="The Ultimate Masterclass" aria-label="The Ultimate Masterclass screenshots">
+                                <button type="button" class="project-gallery-nav project-gallery-nav--prev" aria-label="Previous image">&#10094;</button>
+                                <div class="swiper project-gallery-swiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/masterclass-1.jpg" alt="The Ultimate Masterclass website screenshot 1 of 4" width="1200" height="675" loading="eager" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/masterclass-2.jpg" alt="The Ultimate Masterclass website screenshot 2 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/masterclass-3.jpg" alt="The Ultimate Masterclass website screenshot 3 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/masterclass-4.jpg" alt="The Ultimate Masterclass website screenshot 4 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                    </div>
+                                </div>
+                                <button type="button" class="project-gallery-nav project-gallery-nav--next" aria-label="Next image">&#10095;</button>
+                                <span class="project-gallery-counter">1 / 4</span>
+                                <span class="project-gallery-expand" aria-hidden="true">Click to expand</span>
+                            </div>
                             <ul class="card-list">
                                 <li>Designed and developed a website for The Ultimate Masterclass, a five-day luxury business masterclass and retreat in Dubai for entrepreneurs and business owners</li>
                                 <li>Presented the full event programme, including the business growth masterclass, welcome brunch, Arabian night, wellness sessions, and yacht party</li>
@@ -2805,6 +3127,20 @@
                             <span class="project-accordion-chevron" aria-hidden="true">&#8964;</span>
                         </div>
                         <div class="project-card-body">
+                            <div class="project-gallery" data-gallery-title="Mermaid" aria-label="Mermaid screenshots">
+                                <button type="button" class="project-gallery-nav project-gallery-nav--prev" aria-label="Previous image">&#10094;</button>
+                                <div class="swiper project-gallery-swiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/mermaid-1.jpg" alt="Mermaid website screenshot 1 of 4" width="1200" height="675" loading="eager" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/mermaid-2.jpg" alt="Mermaid website screenshot 2 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/mermaid-3.jpg" alt="Mermaid website screenshot 3 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/mermaid-4.jpg" alt="Mermaid website screenshot 4 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                    </div>
+                                </div>
+                                <button type="button" class="project-gallery-nav project-gallery-nav--next" aria-label="Next image">&#10095;</button>
+                                <span class="project-gallery-counter">1 / 4</span>
+                                <span class="project-gallery-expand" aria-hidden="true">Click to expand</span>
+                            </div>
                             <ul class="card-list">
                                 <li>Built a full web platform for Tadbeer Mermaid, a MOHRE-approved domestic worker agency based in Dubai</li>
                                 <li>Designed key sections including packages, maid profiles, services, testimonials, and a multilingual interface (English & Arabic)</li>
@@ -2830,6 +3166,20 @@
                             <span class="project-accordion-chevron" aria-hidden="true">&#8964;</span>
                         </div>
                         <div class="project-card-body">
+                            <div class="project-gallery" data-gallery-title="Unissen" aria-label="Unissen screenshots">
+                                <button type="button" class="project-gallery-nav project-gallery-nav--prev" aria-label="Previous image">&#10094;</button>
+                                <div class="swiper project-gallery-swiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/unissen-1.jpg" alt="Unissen website screenshot 1 of 4" width="1200" height="675" loading="eager" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/unissen-2.jpg" alt="Unissen website screenshot 2 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/unissen-3.jpg" alt="Unissen website screenshot 3 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/unissen-4.jpg" alt="Unissen website screenshot 4 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                    </div>
+                                </div>
+                                <button type="button" class="project-gallery-nav project-gallery-nav--next" aria-label="Next image">&#10095;</button>
+                                <span class="project-gallery-counter">1 / 4</span>
+                                <span class="project-gallery-expand" aria-hidden="true">Click to expand</span>
+                            </div>
                             <ul class="card-list">
                                 <li>Designed and developed a website for Unissen, a licensed electrical contracting firm specializing in EV charger installation and panel upgrades</li>
                                 <li>Structured key sections including services, how it works, about, FAQ, and contact with clear calls-to-action for free quotes</li>
@@ -2846,7 +3196,7 @@
                     </div>
                     <div class="experience-card project-accordion-card">
                         <div class="project-accordion-header">
-                            <p class="card-date">Jun 2026 – Present</p>
+                            <p class="card-date">Jun 2026 – Nov 2026</p>
                             <div class="card-title-row">
                                 <span class="project-status-dot project-status-dot--online" role="img" aria-label="Status: active"></span>
                                 <h3 class="card-title">Rejuvenate</h3>
@@ -2855,6 +3205,20 @@
                             <span class="project-accordion-chevron" aria-hidden="true">&#8964;</span>
                         </div>
                         <div class="project-card-body">
+                            <div class="project-gallery" data-gallery-title="Rejuvenate" aria-label="Rejuvenate screenshots">
+                                <button type="button" class="project-gallery-nav project-gallery-nav--prev" aria-label="Previous image">&#10094;</button>
+                                <div class="swiper project-gallery-swiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/rejuvenate-1.jpg" alt="Rejuvenate website screenshot 1 of 4" width="1200" height="675" loading="eager" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/rejuvenate-2.jpg" alt="Rejuvenate website screenshot 2 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/rejuvenate-3.jpg" alt="Rejuvenate website screenshot 3 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/rejuvenate-4.jpg" alt="Rejuvenate website screenshot 4 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                    </div>
+                                </div>
+                                <button type="button" class="project-gallery-nav project-gallery-nav--next" aria-label="Next image">&#10095;</button>
+                                <span class="project-gallery-counter">1 / 4</span>
+                                <span class="project-gallery-expand" aria-hidden="true">Click to expand</span>
+                            </div>
                             <ul class="card-list">
                                 <li>Designed and developed a website for Rejuvenate, a ladies-only beauty and aesthetics salon based in Dubai Sports City</li>
                                 <li>Presented core treatments including Skin Pen microneedling, signature facials, peels and skin boosters, dermaplaning, and exosome hair therapy</li>
@@ -2880,6 +3244,20 @@
                             <span class="project-accordion-chevron" aria-hidden="true">&#8964;</span>
                         </div>
                         <div class="project-card-body">
+                            <div class="project-gallery" data-gallery-title="Build Your Web" aria-label="Build Your Web screenshots">
+                                <button type="button" class="project-gallery-nav project-gallery-nav--prev" aria-label="Previous image">&#10094;</button>
+                                <div class="swiper project-gallery-swiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/buildyourweb-1.jpg" alt="Build Your Web website screenshot 1 of 4" width="1200" height="675" loading="eager" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/buildyourweb-2.jpg" alt="Build Your Web website screenshot 2 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/buildyourweb-3.jpg" alt="Build Your Web website screenshot 3 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/buildyourweb-4.jpg" alt="Build Your Web website screenshot 4 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                    </div>
+                                </div>
+                                <button type="button" class="project-gallery-nav project-gallery-nav--next" aria-label="Next image">&#10095;</button>
+                                <span class="project-gallery-counter">1 / 4</span>
+                                <span class="project-gallery-expand" aria-hidden="true">Click to expand</span>
+                            </div>
                             <ul class="card-list">
                                 <li>Built a front-end website design brand focused on modern, polished websites for businesses, personal brands, and portfolios</li>
                                 <li>Designed and developed the studio website with a strong focus on presentation, responsiveness, and clean user experience</li>
@@ -2905,6 +3283,20 @@
                             <span class="project-accordion-chevron" aria-hidden="true">&#8964;</span>
                         </div>
                         <div class="project-card-body">
+                            <div class="project-gallery" data-gallery-title="JANA Travel" aria-label="JANA Travel screenshots">
+                                <button type="button" class="project-gallery-nav project-gallery-nav--prev" aria-label="Previous image">&#10094;</button>
+                                <div class="swiper project-gallery-swiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/janatravel-1.jpg" alt="JANA Travel website screenshot 1 of 4" width="1200" height="675" loading="eager" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/janatravel-2.jpg" alt="JANA Travel website screenshot 2 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/janatravel-3.jpg" alt="JANA Travel website screenshot 3 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/janatravel-4.jpg" alt="JANA Travel website screenshot 4 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                    </div>
+                                </div>
+                                <button type="button" class="project-gallery-nav project-gallery-nav--next" aria-label="Next image">&#10095;</button>
+                                <span class="project-gallery-counter">1 / 4</span>
+                                <span class="project-gallery-expand" aria-hidden="true">Click to expand</span>
+                            </div>
                             <ul class="card-list">
                                 <li>Built a modern travel website for JANA Travel, focused on luxury holidays across the Maldives and Indian Ocean</li>
                                 <li>Designed and structured key sections including destinations, featured packages, services, gallery, and contact</li>
@@ -2955,6 +3347,20 @@
                             <span class="project-accordion-chevron" aria-hidden="true">&#8964;</span>
                         </div>
                         <div class="project-card-body">
+                            <div class="project-gallery" data-gallery-title="Amalak.ae" aria-label="Amalak.ae screenshots">
+                                <button type="button" class="project-gallery-nav project-gallery-nav--prev" aria-label="Previous image">&#10094;</button>
+                                <div class="swiper project-gallery-swiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/amalak-1.jpg" alt="Amalak.ae website screenshot 1 of 4" width="1200" height="675" loading="eager" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/amalak-2.jpg" alt="Amalak.ae website screenshot 2 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/amalak-3.jpg" alt="Amalak.ae website screenshot 3 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                        <div class="swiper-slide"><img class="project-thumb" src="assets/projects/amalak-4.jpg" alt="Amalak.ae website screenshot 4 of 4" width="1200" height="675" loading="lazy" decoding="async" draggable="false"></div>
+                                    </div>
+                                </div>
+                                <button type="button" class="project-gallery-nav project-gallery-nav--next" aria-label="Next image">&#10095;</button>
+                                <span class="project-gallery-counter">1 / 4</span>
+                                <span class="project-gallery-expand" aria-hidden="true">Click to expand</span>
+                            </div>
                             <ul class="card-list">
                                 <li>Built the official website for Amal Al Khaleej — Dubai-based interior design company</li>
                                 <li>Collaborated with a friend to design and develop the entire site</li>
@@ -3213,6 +3619,15 @@
             <span class="close-modal">&times;</span>
             <img src="assets/Yassin_White.JPG" alt="Yassin Amin" class="modal-image">
         </div>
+    </div>
+
+    <!-- Project screenshot lightbox -->
+    <div class="project-lightbox" id="projectLightbox" role="dialog" aria-modal="true" aria-label="Project screenshots" aria-hidden="true">
+        <button type="button" class="project-lightbox-close" aria-label="Close">&times;</button>
+        <button type="button" class="project-lightbox-btn project-lightbox-prev" aria-label="Previous image">&#10094;</button>
+        <div class="swiper project-lightbox-swiper"><div class="swiper-wrapper"></div></div>
+        <button type="button" class="project-lightbox-btn project-lightbox-next" aria-label="Next image">&#10095;</button>
+        <div class="project-lightbox-counter" id="projectLightboxCounter"></div>
     </div>
 
     <script>
@@ -3876,6 +4291,197 @@
             });
         });
 
+        // Project screenshot galleries — same behaviour as JANA Travel's image viewers
+        // (Swiper.js: loop + swipe on phones, arrows + rewind on desktop, tap/click opens a fullscreen lightbox)
+        (function () {
+            var galleries = document.querySelectorAll('.project-gallery');
+            if (!galleries.length || typeof Swiper === 'undefined') return;
+
+            var mobileMq = window.matchMedia('(max-width: 768px)');
+            var lightbox = document.getElementById('projectLightbox');
+            var lbWrapper = lightbox.querySelector('.swiper-wrapper');
+            var lbCounter = document.getElementById('projectLightboxCounter');
+            var lbSwiper = null;
+            var lbImages = [];
+            var lbOpen = false;
+            var lbScroll = 0;
+            var lbSuppressCloseUntil = 0;
+            var lbSource = null;
+
+            function cardOptions(count) {
+                var base = {
+                    slidesPerView: 1,
+                    spaceBetween: 0,
+                    speed: 300,
+                    grabCursor: true,
+                    watchSlidesProgress: true,
+                    resistanceRatio: 0.85,
+                    threshold: 5,
+                    roundLengths: true,
+                    preventInteractionOnTransition: true,
+                    breakpoints: { 769: { allowTouchMove: false, simulateTouch: false } }
+                };
+                // Loop on every screen size so 4 -> 1 is a single step forward, not a rewind through every slide
+                base.loop = count > 1;
+                if (base.loop) base.loopAdditionalSlides = 1;
+                return base;
+            }
+
+            function updateLbCounter(sw) {
+                sw = (sw && typeof sw.realIndex === 'number') ? sw : lbSwiper;
+                if (sw) lbCounter.textContent = (sw.realIndex + 1) + ' / ' + lbImages.length;
+            }
+
+            function lockScroll() {
+                lbScroll = window.scrollY;
+                document.body.style.overflow = 'hidden';
+                document.body.style.position = 'fixed';
+                document.body.style.width = '100%';
+                document.body.style.top = '-' + lbScroll + 'px';
+                document.documentElement.style.overflow = 'hidden';
+            }
+
+            function unlockScroll() {
+                document.body.style.overflow = '';
+                document.body.style.position = '';
+                document.body.style.width = '';
+                document.body.style.top = '';
+                document.documentElement.style.overflow = '';
+                // Restore position instantly — the page's smooth scroll would otherwise animate from the top
+                var html = document.documentElement;
+                var prevBehavior = html.style.scrollBehavior;
+                html.style.scrollBehavior = 'auto';
+                window.scrollTo({ top: lbScroll, left: 0, behavior: 'instant' });
+                html.style.scrollBehavior = prevBehavior;
+            }
+
+            function openLightbox(images, startIndex, sourceSwiper) {
+                lbImages = images;
+                lbSource = sourceSwiper;
+                lbWrapper.innerHTML = images.map(function (img) {
+                    return '<div class="swiper-slide"><img src="' + img.src + '" alt="' + img.alt.replace(/"/g, '&quot;') + '" draggable="false"></div>';
+                }).join('');
+                // Rebuild per open so loop clones always match this project's images
+                if (lbSwiper) lbSwiper.destroy(true, true);
+                lbSwiper = new Swiper(lightbox.querySelector('.project-lightbox-swiper'), {
+                    slidesPerView: 1,
+                    spaceBetween: 0,
+                    speed: 300,
+                    loop: images.length > 1,
+                    loopAdditionalSlides: 1,
+                    initialSlide: startIndex,
+                    watchSlidesProgress: true,
+                    resistanceRatio: 0.85,
+                    threshold: 8,
+                    roundLengths: true,
+                    allowTouchMove: true,
+                    simulateTouch: false,
+                    touchStartPreventDefault: false,
+                    passiveListeners: true,
+                    observer: true,
+                    on: { slideChange: updateLbCounter }
+                });
+                lbSuppressCloseUntil = Date.now() + 500;
+                lightbox.classList.add('active');
+                lightbox.setAttribute('aria-hidden', 'false');
+                lockScroll();
+                lbOpen = true;
+                lbSwiper.update();
+                lbSwiper.slideToLoop(startIndex, 0);
+                updateLbCounter();
+            }
+
+            function closeLightbox() {
+                if (!lbOpen) return;
+                // Keep the card carousel on the image the user ended on
+                if (lbSource && lbSwiper) {
+                    if (lbSource.params.loop) lbSource.slideToLoop(lbSwiper.realIndex, 0);
+                    else lbSource.slideTo(lbSwiper.realIndex, 0);
+                }
+                lightbox.classList.remove('active');
+                lightbox.setAttribute('aria-hidden', 'true');
+                unlockScroll();
+                lbOpen = false;
+            }
+
+            lightbox.querySelector('.project-lightbox-close').addEventListener('click', closeLightbox);
+            lightbox.querySelector('.project-lightbox-prev').addEventListener('click', function (e) { e.stopPropagation(); lbSwiper.slidePrev(); });
+            lightbox.querySelector('.project-lightbox-next').addEventListener('click', function (e) { e.stopPropagation(); lbSwiper.slideNext(); });
+            lightbox.addEventListener('click', function (e) {
+                if (Date.now() < lbSuppressCloseUntil) return;
+                if (e.target.closest('img, .project-lightbox-btn')) return;
+                closeLightbox();
+            });
+            document.addEventListener('keydown', function (e) {
+                if (!lbOpen) return;
+                if (e.key === 'Escape') closeLightbox();
+                else if (e.key === 'ArrowLeft') lbSwiper.slidePrev();
+                else if (e.key === 'ArrowRight') lbSwiper.slideNext();
+            });
+
+            galleries.forEach(function (gallery) {
+                var el = gallery.querySelector('.project-gallery-swiper');
+                var counter = gallery.querySelector('.project-gallery-counter');
+                var prev = gallery.querySelector('.project-gallery-nav--prev');
+                var next = gallery.querySelector('.project-gallery-nav--next');
+                var images = Array.prototype.map.call(el.querySelectorAll('.project-thumb'), function (img) {
+                    return { src: img.getAttribute('src'), alt: img.getAttribute('alt') };
+                });
+                var swiper = null;
+                var dragged = false;
+
+                function updateCounter(sw) {
+                    sw = sw || swiper;
+                    if (sw) counter.textContent = (sw.realIndex + 1) + ' / ' + images.length;
+                }
+
+                function build() {
+                    var index = swiper ? swiper.realIndex : 0;
+                    if (swiper) swiper.destroy(true, true);
+                    var opts = cardOptions(images.length);
+                    opts.initialSlide = index;
+                    opts.on = {
+                        slideChange: updateCounter,
+                        touchStart: function () { dragged = false; },
+                        sliderMove: function () { dragged = true; }
+                    };
+                    swiper = new Swiper(el, opts);
+                    updateCounter();
+                }
+
+                build();
+                mobileMq.addEventListener('change', build);
+
+                // Tap / click an image to open it fullscreen (ignored right after a swipe)
+                el.addEventListener('click', function (e) {
+                    if (!e.target.closest('img')) return;
+                    if (dragged) { dragged = false; return; }
+                    var i = swiper.realIndex;
+                    // Defer so the synthetic click after touchend doesn't hit the overlay and close it
+                    requestAnimationFrame(function () { requestAnimationFrame(function () { openLightbox(images, i, swiper); }); });
+                });
+
+                if (images.length <= 1) {
+                    prev.style.display = 'none';
+                    next.style.display = 'none';
+                }
+                prev.addEventListener('click', function (e) { e.stopPropagation(); swiper.slidePrev(); if (e.detail) prev.blur(); });
+                next.addEventListener('click', function (e) { e.stopPropagation(); swiper.slideNext(); if (e.detail) next.blur(); });
+
+                gallery.addEventListener('mouseenter', function () { gallery.classList.add('is-hover'); });
+                gallery.addEventListener('mouseleave', function () { gallery.classList.remove('is-hover'); });
+
+                el.setAttribute('tabindex', '0');
+                el.setAttribute('role', 'button');
+                el.setAttribute('aria-label', 'View ' + gallery.dataset.galleryTitle + ' screenshots fullscreen');
+                el.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(images, swiper.realIndex, swiper); }
+                    else if (e.key === 'ArrowLeft') swiper.slidePrev();
+                    else if (e.key === 'ArrowRight') swiper.slideNext();
+                });
+            });
+        })();
+
         // Mobile-only project accordion
         (function () {
             var mq = window.matchMedia('(max-width: 768px)');
@@ -3887,7 +4493,7 @@
                     card._accordionBound = true;
                     card.addEventListener('click', function (e) {
                         // Let link clicks pass through without toggling
-                        if (e.target.closest('a')) return;
+                        if (e.target.closest('a, .project-gallery')) return;
                         card.classList.toggle('is-open');
                     });
                 });
