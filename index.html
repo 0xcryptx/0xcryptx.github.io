@@ -2006,6 +2006,21 @@
                 padding: 1rem;
             }
 
+            /* Odd last card (Core Competencies) spans the full row instead of leaving a gap */
+            .skill-category:last-child:nth-child(odd) {
+                grid-column: 1 / -1;
+            }
+
+            .skill-category:last-child:nth-child(odd) h3 {
+                text-align: center;
+            }
+
+            .skill-category:last-child:nth-child(odd) .skill-list {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                column-gap: 0.75rem;
+            }
+
             .skill-category h3 {
                 font-size: 0.8rem;
                 margin-bottom: 0.6rem;
