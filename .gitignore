@@ -2,3 +2,7 @@
 
 # Claude Code personal (local) settings
 .claude/settings.local.json
+
+# Local-only CV master copy
+CV/Master Copy.txt
+CV/*.docx
