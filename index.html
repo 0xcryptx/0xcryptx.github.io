@@ -1130,6 +1130,44 @@
             user-select: none;
         }
 
+        /* Expand all / Collapse all — phone only (cards are only accordions there) */
+        .project-accordion-controls {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .project-accordion-controls {
+                display: flex;
+                justify-content: center;
+                gap: 0.5rem;
+                margin-top: 0.75rem;
+            }
+
+            .project-accordion-control {
+                font: inherit;
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: #007bff;
+                background: #fff;
+                border: 1.5px solid #007bff;
+                border-radius: 999px;
+                padding: 0.35rem 0.9rem;
+                cursor: pointer;
+                -webkit-tap-highlight-color: transparent;
+                transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+            }
+
+            .project-accordion-control:active {
+                background: #007bff;
+                color: #fff;
+            }
+
+            .project-accordion-control:disabled {
+                opacity: 0.4;
+                cursor: default;
+            }
+        }
+
         #projects .card-title-row {
             display: flex;
             align-items: center;
@@ -3075,6 +3113,10 @@
                         <span class="legend-sep" aria-hidden="true">·</span>
                         <span class="legend-item"><span class="legend-count" data-status-count="offline">1</span><span class="legend-label"><span class="project-status-dot project-status-dot--offline" aria-hidden="true"></span> Offline</span></span>
                     </p>
+                    <div class="project-accordion-controls" role="group" aria-label="Project cards">
+                        <button type="button" class="project-accordion-control" data-accordion-action="expand">Expand all</button>
+                        <button type="button" class="project-accordion-control" data-accordion-action="collapse">Collapse all</button>
+                    </div>
                 </div>
                 <div class="experience-grid">
                     <div class="experience-card project-accordion-card">
@@ -4502,6 +4544,27 @@
             // Re-evaluate on resize in case orientation changes
             mq.addEventListener('change', bindAccordion);
             bindAccordion();
+
+            // Expand all / Collapse all
+            var cards = document.querySelectorAll('#projects .project-accordion-card');
+            var expandBtn = document.querySelector('[data-accordion-action="expand"]');
+            var collapseBtn = document.querySelector('[data-accordion-action="collapse"]');
+            function syncControls() {
+                var open = document.querySelectorAll('#projects .project-accordion-card.is-open').length;
+                expandBtn.disabled = open === cards.length;
+                collapseBtn.disabled = open === 0;
+            }
+            if (expandBtn && collapseBtn) {
+                expandBtn.addEventListener('click', function () {
+                    cards.forEach(function (c) { c.classList.add('is-open'); });
+                });
+                collapseBtn.addEventListener('click', function () {
+                    cards.forEach(function (c) { c.classList.remove('is-open'); });
+                });
+                var observer = new MutationObserver(syncControls);
+                cards.forEach(function (c) { observer.observe(c, { attributes: true, attributeFilter: ['class'] }); });
+                syncControls();
+            }
         })();
     </script>
 
