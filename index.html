@@ -1130,6 +1130,40 @@
             user-select: none;
         }
 
+        /* Project logo tile — shown in the phone accordion header only */
+        .project-logo {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            #projects .project-accordion-header {
+                display: grid;
+                grid-template-columns: 52px minmax(0, 1fr);
+                column-gap: 0.8rem;
+                align-items: center;
+            }
+
+            #projects .project-accordion-header > :not(.project-logo):not(.project-accordion-chevron) {
+                grid-column: 2;
+            }
+
+            #projects .project-accordion-header .card-date {
+                justify-self: start;
+            }
+
+            .project-logo {
+                display: block;
+                grid-column: 1;
+                grid-row: 1 / span 3;
+                width: 52px;
+                height: 52px;
+                border-radius: 12px;
+                object-fit: cover;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                border: 1px solid rgba(0, 0, 0, 0.06);
+            }
+        }
+
         /* Expand all / Collapse all — phone only (cards are only accordions there) */
         .project-accordion-controls {
             display: none;
@@ -2454,7 +2488,7 @@
             }
 
             /* Mobile logo positioning */
-            .experience-card img:not(.project-thumb) {
+            .experience-card img:not(.project-thumb):not(.project-logo) {
                 width: 80px !important;
                 height: 80px !important;
                 margin: 0 0 0.8rem 0 !important;
@@ -3121,6 +3155,7 @@
                 <div class="experience-grid">
                     <div class="experience-card project-accordion-card">
                         <div class="project-accordion-header">
+                            <img class="project-logo" src="assets/projects/logos/masterclass.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
                             <p class="card-date">Oct 2026 – Nov 2026</p>
                             <div class="card-title-row">
                                 <span class="project-status-dot project-status-dot--online" role="img" aria-label="Status: active"></span>
@@ -3160,6 +3195,7 @@
                     </div>
                     <div class="experience-card project-accordion-card">
                         <div class="project-accordion-header">
+                            <img class="project-logo" src="assets/projects/logos/mermaid.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
                             <p class="card-date">Aug 2026 – Present</p>
                             <div class="card-title-row">
                                 <span class="project-status-dot project-status-dot--pending" role="img" aria-label="Status: in progress"></span>
@@ -3199,6 +3235,7 @@
                     </div>
                     <div class="experience-card project-accordion-card">
                         <div class="project-accordion-header">
+                            <img class="project-logo" src="assets/projects/logos/unissen.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
                             <p class="card-date">Jul 2026 – Present</p>
                             <div class="card-title-row">
                                 <span class="project-status-dot project-status-dot--pending" role="img" aria-label="Status: in progress"></span>
@@ -3238,6 +3275,7 @@
                     </div>
                     <div class="experience-card project-accordion-card">
                         <div class="project-accordion-header">
+                            <img class="project-logo" src="assets/projects/logos/rejuvenate.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
                             <p class="card-date">Jun 2026 – Nov 2026</p>
                             <div class="card-title-row">
                                 <span class="project-status-dot project-status-dot--online" role="img" aria-label="Status: active"></span>
@@ -3277,6 +3315,7 @@
                     </div>
                     <div class="experience-card project-accordion-card">
                         <div class="project-accordion-header">
+                            <img class="project-logo" src="assets/projects/logos/buildyourweb.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
                             <p class="card-date">Apr 2026 – Present</p>
                             <div class="card-title-row">
                                 <span class="project-status-dot project-status-dot--online" role="img" aria-label="Status: active"></span>
@@ -3316,6 +3355,7 @@
                     </div>
                     <div class="experience-card project-accordion-card">
                         <div class="project-accordion-header">
+                            <img class="project-logo" src="assets/projects/logos/janatravel.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
                             <p class="card-date">Mar 2026 – Jul 2026</p>
                             <div class="card-title-row">
                                 <span class="project-status-dot project-status-dot--online" role="img" aria-label="Status: active"></span>
@@ -3355,6 +3395,7 @@
                     </div>
                     <div class="experience-card project-accordion-card">
                         <div class="project-accordion-header">
+                            <img class="project-logo" src="assets/projects/logos/snatchit.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
                             <p class="card-date">Jun 2025 – Jan 2026</p>
                             <div class="card-title-row">
                                 <span class="project-status-dot project-status-dot--offline" role="img" aria-label="Status: offline"></span>
@@ -3380,6 +3421,7 @@
                     </div>
                     <div class="experience-card project-accordion-card">
                         <div class="project-accordion-header">
+                            <img class="project-logo" src="assets/projects/logos/amalak.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
                             <p class="card-date">Dec 2024 - Present</p>
                             <div class="card-title-row">
                                 <span class="project-status-dot project-status-dot--online" role="img" aria-label="Status: active"></span>
